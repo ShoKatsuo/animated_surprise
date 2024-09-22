@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flor Amarilla Animada</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Animación del libro */
+        @keyframes openBook {
+            0% {
+                transform: rotateY(0deg);
+            }
+
+            50% {
+                transform: rotateY(90deg);
+            }
+
+            100% {
+                transform: rotateY(0deg);
+            }
+        }
+
+        /* CSS del libro */
+
+        .book {
+            width: 200px;
+            height: 300px;
+            background: #634545;
+            border: 2px solid #8b6464;
+            border-radius: 5px;
+            position: relative;
+            animation: openBook 2s ease forwards;
+            transform-origin: left;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .book img {
+            width: 100%;
+            height: auto;
+            display: none;
+        }
+
+        .book.open img {
+            display: block;
+            /* Mostrar la imagen cuando se abra */
+        }
+
+        .book-text {
+            position: absolute;
+            z-index: 10;
+            color: white;
+            text-align: center;
+            transition: opacity 0.5s;
+        }
+
+        .book.open .book-text {
+            opacity: 0;
+
+        }
+
+        /* CSS de la flor */
+
+        /* Animación de flotación */
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Balanceo de la hoja */
+        @keyframes leafSwing {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            50% {
+                transform: rotate(10deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        /* Pétalos */
+        .petal {
+            position: absolute;
+            width: 60px;
+            height: 120px;
+            background-color: #ffeb3b;
+            border-radius: 50%;
+        }
+
+        /* Centro de la flor */
+        .center {
+            position: relative;
+            width: 70px;
+            height: 70px;
+            background-color: #ff9800;
+            border-radius: 50%;
+        }
+
+        /* Tallo */
+        .stem {
+            position: relative;
+            width: 10px;
+            height: 150px;
+            background-color: #4caf50;
+            top: 20px;
+            z-index: -1;
+        }
+
+        /* Hoja */
+        .leaf {
+            position: absolute;
+            width: 60px;
+            height: 30px;
+            background-color: #4caf50;
+            border-radius: 50%;
+        }
+
+        /* Mensaje */
+        .message {
+            display: none;
+            font-size: 32px;
+            top: 20%;
+            /* Ajustar la posición sobre la flor */
+            z-index: 20;
+            /* Asegurarse de que esté encima */
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="flex justify-center items-center min-h-screen bg-gray-900">
+    <div id="book" class="book" onclick="openBook()">
+        <div class="book-text">
+            <h3 class="text-white text-center">Toca una vez para abrir el libro</>
+        </div>
+        <img src="./dedos.jpg" alt="Imagen del libro">
+    </div>
+
+    <div id="message" class="message text-center text-white absolute">
+        <h3>Con mucho cariño para tí ^-^</h3>
+    </div>
+
+    <div id="flower" class="relative flex flex-col items-center hidden animate-[float_5s_ease-in-out_infinite]">
+        <!-- Pétalos (vista frontal) -->
+        <div class="relative w-24 h-24">
+            <div class="petal" style="top: 70px; left: 15px; transform: rotate(0deg);"></div>
+            <div class="petal" style="top: 70px; left: 15px; transform: rotate(30deg);"></div>
+            <div class="petal" style="top: 70px; left: 15px; transform: rotate(60deg);"></div>
+            <div class="petal" style="top: 70px; left: 15px; transform: rotate(90deg);"></div>
+            <div class="petal" style="top: 70px; left: 15px; transform: rotate(120deg);"></div>
+            <div class="petal" style="top: 70px; left: 15px; transform: rotate(150deg);"></div>
+            <div class="petal" style="top: 70px; left: 15px; transform: rotate(180deg);"></div>
+            <div class="petal" style="top: 70px; left: 15px; transform: rotate(210deg);"></div>
+            <div class="petal" style="top: 70px; left: 15px; transform: rotate(240deg);"></div>
+            <div class="petal" style="top: 70px; left: 15px; transform: rotate(270deg);"></div>
+            <div class="petal" style="top: 70px; left: 15px; transform: rotate(300deg);"></div>
+            <div class="petal" style="top: 70px; left: 15px; transform: rotate(330deg);"></div>
+        </div>
+
+        <!-- Centro de la flor -->
+        <div class="center"></div>
+
+        <!-- Tallo -->
+        <div class="stem"></div>
+
+        <!-- Hojas -->
+        <div class="leaf"
+            style="bottom: 60px; left: -10px; transform: rotate(-30deg); animation: leafSwing 4s ease-in-out infinite;">
+        </div>
+        <div class="leaf"
+            style="bottom: 60px; left: 50px; transform: rotate(30deg); animation: leafSwing 4s ease-in-out infinite;">
+        </div>
+    </div>
+
+    <script>
+        function openBook() {
+            const book = document.getElementById('book');
+            const flower = document.getElementById('flower');
+            const message = document.getElementById('message');
+            book.classList.add('open');
+            setTimeout(() => {
+                book.classList.add('hidden'); // Ocultar el libro después de abrir
+                flower.classList.remove('hidden'); // Mostrar la flor
+                message.style.display = 'block'; // Mostrar el mensaje
+            }, 2000); // Tiempo de animación del libro
+        }
+    </script>
+</body>
+
+</html>
